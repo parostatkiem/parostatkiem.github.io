@@ -27,3 +27,7 @@ body {
   margin: 0 auto;
   color: blanchedalmond;
 }
+
+img {
+  max-width: 100%;
+}
