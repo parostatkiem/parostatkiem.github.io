@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { color } from 'three/webgpu';
 import { createChannel } from './channel';
+import { CSS2DRenderer } from 'three/examples/jsm/Addons.js';
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x222222);
@@ -11,20 +12,20 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 // renderer.setAnimationLoop(animate);
 document.body.appendChild(renderer.domElement);
 
-const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-const cube = new THREE.Mesh(geometry, material);
+
 scene.add(createChannel());
 
 camera.position.z = 5;
 
-function animate() {
-
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
-
-    renderer.render(scene, camera);
-
-}
 
 renderer.render(scene, camera);
+
+const labelRenderer = new CSS2DRenderer();
+labelRenderer.setSize(window.innerWidth, window.innerHeight);
+labelRenderer.domElement.style.position = 'absolute';
+labelRenderer.domElement.style.top = '0px';
+document.body.appendChild(labelRenderer.domElement);
+
+// camera.layers.toggle(0);
+
+labelRenderer.render(scene, camera);
