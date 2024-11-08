@@ -19,10 +19,11 @@ export const createChannelVisual = (channelData: Channel) => {
     // document.body.appendChild(earthDiv)
 
     const earthLabel = new CSS2DObject(earthDiv);
-    earthLabel.position.set(-RADIUS, -1.5 * RADIUS, 0);
+    earthLabel.position.set(-RADIUS * 2, RADIUS, -10);
     earthLabel.center.set(0, 0);
+    // earthLabel.scale = 10;
     sphere.add(earthLabel);
-    earthLabel.layers.set(0);
+    // earthLabel.layers.set(0);
 
     // sphere.matrixAutoUpdate = false;
     // sphere.updateMatrix();
