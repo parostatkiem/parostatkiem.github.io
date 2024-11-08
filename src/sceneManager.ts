@@ -1,6 +1,7 @@
 import { Object3D, Vector2 } from "three"
 import { getAllChannels } from "./pubnub"
 import { createChannelVisual, RADIUS } from "./channel"
+import { MAX_X, MAX_Y } from "./coordinates"
 
 
 
@@ -19,8 +20,8 @@ function getRandomArbitrary(min: number, max: number) {
 }
 const getRandomPositionOnScreen = (objectSize: number, objectMargin: number): Vector2 =>
     new Vector2(
-        getRandomArbitrary(objectSize + objectMargin, window.innerWidth - objectSize - objectMargin),
-        getRandomArbitrary(objectSize + objectMargin, window.innerWidth - objectSize - objectMargin)
+        getRandomArbitrary(objectSize + objectMargin, MAX_X - objectSize - objectMargin),
+        getRandomArbitrary(objectSize + objectMargin, MAX_Y - objectSize - objectMargin)
 
     );
 
@@ -28,12 +29,14 @@ const getRandomPositionOnScreen = (objectSize: number, objectMargin: number): Ve
 
 const assignChannelPosition = (otherChannels: Channel[]): Vector2 => {
     let pos: Vector2;
-    // do {
+    do {
 
-    pos = getRandomPositionOnScreen(RADIUS * 2, RADIUS);
-    // }
-    // while (otherChannels.some(({ position }) => pos.x - position.x < RADIUS || pos.x + 3 * RADIUS > position.x
-    //     || pos.y - position.y < RADIUS || pos.y + 3 * RADIUS > position.y));
+        pos = getRandomPositionOnScreen(RADIUS * 2, RADIUS);
+    }
+
+    // while (false)
+    // console.log(otherChannels)
+    while (otherChannels.some(({ position }) => position.distanceTo(pos) < 3 * RADIUS))
 
 
     return pos
