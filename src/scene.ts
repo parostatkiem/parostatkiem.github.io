@@ -1,11 +1,19 @@
+import './coordinates'
 import * as THREE from 'three';
 import { color } from 'three/webgpu';
-import { createChannel } from './channel';
+import { createChannelVisual } from './channel';
 import { CSS2DRenderer } from 'three/examples/jsm/Addons.js';
+import './sceneManager'
+import { getChannelsVisual } from './sceneManager';
+import { MAX_X, MAX_Y } from './coordinates';
+
+
+
+console.log(window.innerWidth, window.innerHeight, MAX_X, MAX_Y)
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x222222);
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const camera = new THREE.OrthographicCamera(0, MAX_X, 0, MAX_Y, 0.1, 1000);
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -13,10 +21,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 
-scene.add(createChannel());
-
-camera.position.z = 5;
-
+scene.add(...getChannelsVisual());
 
 renderer.render(scene, camera);
 
