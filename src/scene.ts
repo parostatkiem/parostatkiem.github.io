@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { color } from 'three/webgpu';
+import { createChannel } from './channel';
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x222222);
@@ -7,13 +8,13 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setAnimationLoop(animate);
+// renderer.setAnimationLoop(animate);
 document.body.appendChild(renderer.domElement);
 
 const geometry = new THREE.BoxGeometry(1, 1, 1);
 const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 const cube = new THREE.Mesh(geometry, material);
-scene.add(cube);
+scene.add(createChannel());
 
 camera.position.z = 5;
 
@@ -25,3 +26,5 @@ function animate() {
     renderer.render(scene, camera);
 
 }
+
+renderer.render(scene, camera);
