@@ -7,10 +7,16 @@ export const RADIUS = MAX_X / 120;
 
 export const createChannelVisual = (channelData: Channel) => {
     const geometry = new THREE.SphereGeometry(RADIUS);
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: false });
+
     const sphere = new THREE.Mesh(geometry, material);
+    sphere.receiveShadow = true;
+    sphere.castShadow = true;
     sphere.position.x = channelData.position.x;
     sphere.position.y = channelData.position.y;
+    sphere.position.z = RADIUS;
+
+
 
     const earthDiv = document.createElement('div');
     earthDiv.className = 'label';
@@ -19,7 +25,7 @@ export const createChannelVisual = (channelData: Channel) => {
     // document.body.appendChild(earthDiv)
 
     const earthLabel = new CSS2DObject(earthDiv);
-    earthLabel.position.set(-RADIUS * 2, RADIUS, -10);
+    earthLabel.position.set(-RADIUS * 2, RADIUS, 0);
     earthLabel.center.set(0, 0);
     // earthLabel.scale = 10;
     sphere.add(earthLabel);
