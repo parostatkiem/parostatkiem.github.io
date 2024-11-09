@@ -28,10 +28,10 @@ scene.add(backgroundPlane);
 
 
 // lights
-const dirLight = new THREE.DirectionalLight(0xffffff, 2);
+const dirLight = new THREE.DirectionalLight(0xffffff, 0.05);
 dirLight.position.set(0, 10, 4500);
 // dirLight.lookAt(SCENE_CENTER)
-dirLight.shadow.mapSize.set(4096, 4096);
+// dirLight.shadow.mapSize.set(4096, 4096);
 // dirLight.penumbra = 0.5;
 dirLight.castShadow = true;
 scene.add(dirLight)
