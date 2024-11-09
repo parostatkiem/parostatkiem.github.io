@@ -1,15 +1,12 @@
 import './coordinates'
 import * as THREE from 'three';
-import { color, PI } from 'three/webgpu';
-import { createChannelVisual } from './channel/channel';
 import { CSS2DRenderer } from 'three/examples/jsm/Addons.js';
 import './sceneManager'
 import { getChannelsVisual } from './sceneManager';
 import { MAX_X, MAX_Y, SCENE_CENTER } from './coordinates';
-import { backgroundPlane } from './backgroundPlane/backgroundPlane';
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x222222);
+scene.background = new THREE.Color(0x111111);
 const CAMERA_ZOOM = 2.7;
 const camera = new THREE.OrthographicCamera(
     window.innerWidth / - CAMERA_ZOOM,
@@ -30,22 +27,6 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 document.body.appendChild(renderer.domElement);
 
-// scene.add(backgroundPlane);
-
-
-
-// lights
-const dirLight = new THREE.DirectionalLight(0xffffff, 0.005);
-dirLight.position.set(0, 0, 100);
-// dirLight.lookAt(SCENE_CENTER)
-// dirLight.shadow.mapSize.set(4096, 4096);
-// dirLight.penumbra = 0.5;
-dirLight.castShadow = true;
-// dirLight.shado
-scene.add(dirLight)
-
-const light = new THREE.AmbientLight(0x404040, 10); // soft white light
-scene.add(light);
 
 // scene.add(createChannelVisual({ name: "BL", position: new THREE.Vector2(0, 0) }))
 // scene.add(createChannelVisual({ name: "TR", position: new THREE.Vector2(MAX_X, MAX_Y) }))
