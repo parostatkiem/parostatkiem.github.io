@@ -26,8 +26,8 @@ const lightTexture = applyMapping(texture.load('/textures/background/Stained_Cer
 const geometry = new THREE.PlaneGeometry(MAX_X, MAX_Y);
 const material = new THREE.MeshStandardMaterial({
     map: baseTexture,
-    displacementMap: displacementTexture,
-    displacementScale: 0.15,
+    // displacementMap: displacementTexture,
+    // // displacementScale: 0.0001,
     roughnessMap: roughnessTexture,
     metalnessMap: metalnessTexture,
     normalMap: normalTexture,
@@ -36,7 +36,7 @@ const material = new THREE.MeshStandardMaterial({
 
 const mesh = new THREE.Mesh(geometry, material);
 mesh.position.set(SCENE_CENTER.x, SCENE_CENTER.y, SCENE_CENTER.z);
-// mesh.rotation.y = - Math.PI / 2;
+// mesh.rotation.x = -1.5;
 mesh.receiveShadow = true;
 
 
