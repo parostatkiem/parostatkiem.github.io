@@ -30,7 +30,7 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 document.body.appendChild(renderer.domElement);
 
-scene.add(backgroundPlane);
+// scene.add(backgroundPlane);
 
 
 
