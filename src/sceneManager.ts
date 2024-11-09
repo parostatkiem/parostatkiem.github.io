@@ -1,6 +1,6 @@
 import { Object3D, Vector2 } from "three"
 import { getAllChannels } from "./pubnub"
-import { createChannelVisual, RADIUS } from "./channel"
+import { createChannelVisual, RADIUS } from "./channel/channel"
 import { MAX_X, MAX_Y } from "./coordinates"
 
 
