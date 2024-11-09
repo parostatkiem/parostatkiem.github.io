@@ -21,8 +21,6 @@ camera.lookAt(SCENE_CENTER);
 
 const renderer = new THREE.WebGLRenderer({ alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 
 document.body.appendChild(renderer.domElement);
