@@ -28,7 +28,7 @@ export class VisualObject {
     }
 
     this.update();
-    this.model.position.z = RADIUS + RADIUS;
+    this.model.position.z = RADIUS + RADIUS; // todo 3d maybe?
 
     this.scene.add(this.model);
   }

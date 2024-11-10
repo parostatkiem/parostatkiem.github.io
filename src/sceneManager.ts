@@ -5,25 +5,33 @@ import { Channel, RADIUS } from './channel/channel';
 import { getAllChannelsRawData } from './pubnub';
 import { VisualObject } from './channel/visualObject';
 
-const getChannels = async (scene: Scene) =>
-  (await getAllChannelsRawData()).data.map(
-    (c) => new Channel(c.name ?? '<unknown>', scene)
-  );
+export class SceneManager {
+  private static _channels: Channel[];
 
-const assignChannelsPositions = (channels: Channel[]) => {
-  channels.forEach((c, _, others) => {
-    c.assignPosition(
-      VisualObject.getPositionNotConflictingWith(others, RADIUS * 2)
+  private static getChannelsData = async (scene: Scene) =>
+    (await getAllChannelsRawData()).data.map(
+      (c) => new Channel(c.name ?? '<unknown>', scene)
     );
-  });
-  return channels;
-};
 
-export const renderAllChannels = async (scene: Scene) => {
-  const channels = await getChannels(scene);
-  pipe(
-    channels,
-    assignChannelsPositions,
-    array.map((c) => c.addToScene())
-  );
-};
+  private static assignChannelsPositions = (channels: Channel[]) => {
+    channels.forEach((c, _, others) => {
+      c.assignPosition(
+        VisualObject.getPositionNotConflictingWith(others, RADIUS * 2)
+      );
+    });
+    return channels;
+  };
+
+  static get channels() {
+    return this._channels;
+  }
+
+  static renderAllChannels = async (scene: Scene) => {
+    this._channels = await this.getChannelsData(scene);
+    pipe(
+      this.channels,
+      this.assignChannelsPositions,
+      array.map((c) => c.addToScene())
+    );
+  };
+}
