@@ -1,5 +1,8 @@
 import * as THREE from 'three';
-import { MAX_X } from '../coordinates';
+import {
+  getRandomPositionOnScreen,
+  OBJECT_PLACEMENT_MARGIN,
+} from '../coordinates';
 import { RADIUS } from './channel';
 
 export class VisualObject {
@@ -37,4 +40,22 @@ export class VisualObject {
   public get position() {
     return this._position;
   }
+
+  static getPositionNotConflictingWith = (
+    otherObjects: VisualObject[],
+    objectSize: number
+  ): THREE.Vector2 => {
+    let pos: THREE.Vector2;
+    do {
+      pos = getRandomPositionOnScreen(objectSize, OBJECT_PLACEMENT_MARGIN);
+    } while (
+      otherObjects.some(
+        ({ position }) =>
+          position &&
+          position.distanceTo(pos) < objectSize + OBJECT_PLACEMENT_MARGIN
+      )
+    );
+
+    return pos;
+  };
 }

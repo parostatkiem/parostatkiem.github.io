@@ -1,46 +1,9 @@
 import { array } from 'fp-ts';
 import { pipe } from 'fp-ts/lib/function';
-import { Scene, Vector2 } from 'three';
+import { Scene } from 'three';
 import { Channel, RADIUS } from './channel/channel';
-import { VisualObject } from './channel/visualObject';
-import { MAX_X, MAX_Y } from './coordinates';
 import { getAllChannelsRawData } from './pubnub';
-
-const MARGIN = RADIUS;
-function getRandomArbitrary(min: number, max: number) {
-  return Math.random() * (max - min) + min;
-}
-const getRandomPositionOnScreen = (
-  objectSize: number,
-  objectMargin: number
-): Vector2 =>
-  new Vector2(
-    getRandomArbitrary(
-      objectSize + objectMargin,
-      MAX_X - objectSize - objectMargin
-    ),
-    getRandomArbitrary(
-      objectSize + objectMargin,
-      MAX_Y - objectSize - objectMargin
-    )
-  );
-
-const getPositionNotConflictingWith = (
-  otherObjects: VisualObject[],
-  objectSize: number
-): Vector2 => {
-  let pos: Vector2;
-  do {
-    pos = getRandomPositionOnScreen(objectSize, MARGIN);
-  } while (
-    otherObjects.some(
-      ({ position }) =>
-        position && position.distanceTo(pos) < objectSize + MARGIN
-    )
-  );
-
-  return pos;
-};
+import { VisualObject } from './channel/visualObject';
 
 const getChannels = async (scene: Scene) =>
   (await getAllChannelsRawData()).data.map(
@@ -49,7 +12,9 @@ const getChannels = async (scene: Scene) =>
 
 const assignChannelsPositions = (channels: Channel[]) => {
   channels.forEach((c, _, others) => {
-    c.assignPosition(getPositionNotConflictingWith(others, RADIUS * 2));
+    c.assignPosition(
+      VisualObject.getPositionNotConflictingWith(others, RADIUS * 2)
+    );
   });
   return channels;
 };

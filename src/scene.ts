@@ -1,6 +1,7 @@
 import * as THREE from 'three';
-import { CSS2DRenderer } from 'three/examples/jsm/Addons.js';
 import './coordinates';
+import { CSS2DRenderer } from 'three/examples/jsm/Addons.js';
+
 import { MAX_X, MAX_Y, SCENE_CENTER } from './coordinates';
 import './sceneManager';
 import { renderAllChannels } from './sceneManager';
