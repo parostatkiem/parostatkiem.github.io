@@ -45,7 +45,6 @@ export class Channel {
     sphere.add(earthLabel);
 
     this.scene.add(sphere);
-    this.scene.updateWorldMatrix(true, true);
   }
 
   public assignPosition(pos: THREE.Vector2) {
