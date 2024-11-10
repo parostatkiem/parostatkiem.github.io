@@ -1,20 +1,29 @@
 import * as THREE from 'three';
 import { CSS2DObject } from 'three/examples/jsm/Addons.js';
 import { MAX_X } from '../coordinates';
+import { Subscription } from 'pubnub';
+import { getChannelSubscription } from '../pubnub';
+import { VisualObject } from './visualObject';
 
 export const RADIUS = MAX_X / 100;
 
-export class Channel {
+export class Channel extends VisualObject {
   private name: string;
-  private scene: THREE.Scene;
-  private _position: THREE.Vector2 | undefined;
+  private subscription: Subscription;
 
   constructor(name: string, scene: THREE.Scene) {
+    super(scene);
     this.name = name;
-    this.scene = scene;
+    this.subscription = getChannelSubscription(this.name);
+    this.subscription.onMessage = this.handleMessageReceived;
+    this.subscription.subscribe();
   }
 
-  public render() {
+  private handleMessageReceived(message: Subscription.Message) {
+    console.log(message.publisher);
+  }
+
+  public addToScene() {
     if (!this.position) {
       return undefined;
     }
@@ -27,11 +36,6 @@ export class Channel {
       opacity: 0.4,
       transparent: true,
     });
-    const sphere = new THREE.Mesh(geometry, material);
-
-    sphere.position.x = this.position.x;
-    sphere.position.y = this.position.y;
-    sphere.position.z = RADIUS + RADIUS;
 
     const earthDiv = document.createElement('div');
     earthDiv.className = 'label';
@@ -42,16 +46,9 @@ export class Channel {
     const earthLabel = new CSS2DObject(earthDiv);
     earthLabel.position.set(-RADIUS * 2, -RADIUS, 0);
     earthLabel.center.set(0, 0);
-    sphere.add(earthLabel);
 
-    this.scene.add(sphere);
-  }
-
-  public assignPosition(pos: THREE.Vector2) {
-    this._position = pos;
-  }
-
-  public get position() {
-    return this._position;
+    this.model = new THREE.Mesh(geometry, material);
+    this.model.add(earthLabel);
+    super.addToScene();
   }
 }

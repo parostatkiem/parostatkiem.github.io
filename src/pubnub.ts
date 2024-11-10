@@ -13,4 +13,10 @@ export const getAllChannelsRawData = async () =>
     // sort: any,
     // limit: number,
     // page: any
+    include: {
+      totalCount: true,
+    },
   });
+
+export const getChannelSubscription = (c: string) =>
+  pubnub.channel(c).subscription({ receivePresenceEvents: true });
