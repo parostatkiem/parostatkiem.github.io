@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "fp-ts": "^2.16.9",
     "pubnub": "^8.2.10",
     "three": "^0.170.0"
   },
