@@ -28,7 +28,9 @@ export class Channel extends VisualObject {
     // this.subscription.onMessage = this.handleMessageReceived;
     this.subscription.addListener({
       message: handleMessageReceived,
+      signal: handleMessageReceived,
     });
+    console.log('createing subscriptiopn to ', this.name);
     this.subscription.subscribe();
   }
 
@@ -50,7 +52,7 @@ export class Channel extends VisualObject {
     earthDiv.className = 'label';
     earthDiv.textContent = this.name;
     earthDiv.style.backgroundColor = 'transparent';
-    // document.body.appendChild(earthDiv)
+    document.body.appendChild(earthDiv);
 
     const earthLabel = new CSS2DObject(earthDiv);
     earthLabel.position.set(-RADIUS * 2, -RADIUS, 0);
