@@ -4,6 +4,7 @@ import { MAX_X } from '../coordinates';
 import { Subscription } from 'pubnub';
 import { getChannelSubscription } from '../pubnub';
 import { VisualObject } from './visualObject';
+import { SceneManager } from '../sceneManager';
 
 export const RADIUS = MAX_X / 100;
 
@@ -20,7 +21,12 @@ export class Channel extends VisualObject {
   }
 
   private handleMessageReceived(message: Subscription.Message) {
-    console.log(message.publisher);
+    console.log('got message from', message.publisher);
+    SceneManager.registerPublisherConnection(
+      message.publisher ?? '<unknown>',
+      message.channel,
+      this.scene
+    );
   }
 
   public addToScene() {

@@ -6,6 +6,9 @@ import { MAX_X, MAX_Y, SCENE_CENTER } from './coordinates';
 import './sceneManager';
 import Stats from 'three/examples/jsm/libs/stats.module.js';
 import { SceneManager } from './sceneManager';
+import { setToken } from './pubnub';
+
+// const SCENE_MANAGER=
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x111111);
@@ -31,6 +34,7 @@ document.body.appendChild(renderer.domElement);
 // scene.add(createChannelVisual({ name: "BL", position: new THREE.Vector2(0, 0) }))
 // scene.add(createChannelVisual({ name: "TR", position: new THREE.Vector2(MAX_X, MAX_Y) }))
 SceneManager.renderAllChannels(scene);
+SceneManager.renderAllPublishers(scene);
 
 const labelRenderer = new CSS2DRenderer();
 labelRenderer.setSize(window.innerWidth, window.innerHeight);
