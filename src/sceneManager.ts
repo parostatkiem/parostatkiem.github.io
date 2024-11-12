@@ -55,11 +55,18 @@ export class SceneManager {
     channelName: string,
     scene: Scene
   ) {
-    console.log(this.registerPublisherConnection);
-    const maybeExisting = this.publishers.find((p) => p.name === publisherName);
+    console.log(
+      'registering connection from',
+      publisherName,
+      'to',
+      channelName
+    );
+    const maybePublisher = this.publishers.find(
+      (p) => p.name === publisherName
+    );
 
     pipe(
-      maybeExisting,
+      maybePublisher,
       option.fromNullable,
       option.getOrElse(() => this.addNewPublisher(publisherName, scene))
     );

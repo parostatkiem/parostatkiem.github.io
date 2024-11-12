@@ -14,19 +14,22 @@ export class Channel extends VisualObject {
 
   constructor(name: string, scene: THREE.Scene) {
     super(scene);
+
+    const handleMessageReceived = (message: Subscription.Message) => {
+      console.log('got message from', message.publisher, message.channel);
+      SceneManager.registerPublisherConnection(
+        message.publisher ?? '<unknown>',
+        message.channel,
+        this.scene
+      );
+    };
     this.name = name;
     this.subscription = getChannelSubscription(this.name);
-    this.subscription.onMessage = this.handleMessageReceived;
+    // this.subscription.onMessage = this.handleMessageReceived;
+    this.subscription.addListener({
+      message: handleMessageReceived,
+    });
     this.subscription.subscribe();
-  }
-
-  private handleMessageReceived(message: Subscription.Message) {
-    console.log('got message from', message.publisher);
-    SceneManager.registerPublisherConnection(
-      message.publisher ?? '<unknown>',
-      message.channel,
-      this.scene
-    );
   }
 
   public addToScene() {
