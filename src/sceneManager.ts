@@ -52,24 +52,22 @@ export class SceneManager {
 
   static registerPublisherConnection(
     publisherName: string,
-    channelName: string,
+    channel: Channel,
     scene: Scene
   ) {
-    console.log(
-      'registering connection from',
-      publisherName,
-      'to',
-      channelName
-    );
     const maybePublisher = this.publishers.find(
       (p) => p.name === publisherName
     );
 
-    pipe(
+    const publisher = pipe(
       maybePublisher,
       option.fromNullable,
       option.getOrElse(() => this.addNewPublisher(publisherName, scene))
     );
+
+    if (!maybePublisher?.getConnectionTo(channel)) {
+      publisher.registerConnection(channel);
+    }
   }
 
   static renderAllChannels = async (scene: Scene) => {

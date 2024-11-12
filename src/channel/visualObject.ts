@@ -7,7 +7,7 @@ import { RADIUS } from './channel';
 
 export class VisualObject {
   public scene: THREE.Scene;
-  private _position: THREE.Vector2 | undefined;
+  private _position: THREE.Vector3 | undefined;
   public model: THREE.Object3D | undefined;
 
   constructor(scene: THREE.Scene) {
@@ -34,7 +34,7 @@ export class VisualObject {
   }
 
   public assignPosition(pos: THREE.Vector2) {
-    this._position = pos;
+    this._position = new THREE.Vector3(pos.x, pos.y, RADIUS);
   }
 
   public get position() {
@@ -44,8 +44,8 @@ export class VisualObject {
   static getPositionNotConflictingWith = (
     otherObjects: VisualObject[],
     objectSize: number
-  ): THREE.Vector2 => {
-    let pos: THREE.Vector2;
+  ): THREE.Vector3 => {
+    let pos: THREE.Vector3;
     do {
       pos = getRandomPositionOnScreen(objectSize, OBJECT_PLACEMENT_MARGIN);
     } while (

@@ -2,10 +2,14 @@ import * as THREE from 'three';
 import { CSS2DObject } from 'three/examples/jsm/Addons.js';
 import { MAX_X } from '../coordinates';
 import { VisualObject } from './visualObject';
+import { Channel } from './channel';
+import { array } from 'fp-ts';
+import { Connection } from './connection';
 
 export class Publisher extends VisualObject {
   private _name: string;
   static readonly RADIUS = MAX_X / 150;
+  private connections: Connection[] = [];
 
   constructor(name: string, scene: THREE.Scene) {
     super(scene);
@@ -46,5 +50,20 @@ export class Publisher extends VisualObject {
 
     console.log('add to scene', this.name);
     super.addToScene();
+  }
+
+  public registerConnection(to: Channel) {
+    const isExisting = this.connections.find((c) => c.to === to);
+
+    if (!isExisting) {
+      this.connections = [
+        ...this.connections,
+        new Connection(this, to, this.scene),
+      ];
+    }
+  }
+
+  public getConnectionTo(to: Channel) {
+    return this.connections.find((c) => c.to === to);
   }
 }

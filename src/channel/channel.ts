@@ -19,7 +19,7 @@ export class Channel extends VisualObject {
       console.log('got message from', message.publisher, message.channel);
       SceneManager.registerPublisherConnection(
         message.publisher ?? '<unknown>',
-        message.channel,
+        this,
         this.scene
       );
     };

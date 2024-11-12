@@ -2,6 +2,7 @@ import * as THREE from 'three';
 
 export const MAX_X = 1000;
 export const MAX_Y = (MAX_X * window.innerHeight) / window.innerWidth;
+export const MAX_Z = MAX_X;
 
 export const SCENE_CENTER = new THREE.Vector3(MAX_X / 2, MAX_Y / 2, 0);
 
@@ -13,8 +14,8 @@ function getRandomArbitrary(min: number, max: number) {
 export const getRandomPositionOnScreen = (
   objectSize: number,
   objectMargin: number
-): THREE.Vector2 =>
-  new THREE.Vector2(
+): THREE.Vector3 =>
+  new THREE.Vector3(
     getRandomArbitrary(
       objectSize + objectMargin,
       MAX_X - objectSize - objectMargin
@@ -22,5 +23,9 @@ export const getRandomPositionOnScreen = (
     getRandomArbitrary(
       objectSize + objectMargin,
       MAX_Y - objectSize - objectMargin
+    ),
+    getRandomArbitrary(
+      objectSize + objectMargin,
+      MAX_Z - objectSize - objectMargin
     )
   );
