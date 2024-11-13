@@ -4,6 +4,8 @@ import { MAX_X } from '../coordinates';
 import { Channel } from './channel';
 import { Connection } from './connection';
 import { VisualObject } from './visualObject';
+import { pipe } from 'fp-ts/lib/function';
+import { array, option } from 'fp-ts';
 
 export class Publisher extends VisualObject {
   private _name: string;
@@ -52,17 +54,29 @@ export class Publisher extends VisualObject {
   }
 
   public registerConnection(to: Channel) {
-    const isExisting = this.connections.find((c) => c.to === to);
-
-    if (!isExisting && this.model) {
-      this.connections = [
-        ...this.connections,
-        new Connection(this, to, this.model),
-      ];
+    if (!this.model) {
+      return;
     }
+
+    return pipe(
+      this.getConnectionTo(to),
+      option.getOrElse(() => {
+        if (!this.model) {
+          throw new Error(
+            'trying to add connection before model is initialized'
+          );
+        }
+        const newConnection = new Connection(this, to, this.model);
+        this.connections = [...this.connections, newConnection];
+        return newConnection;
+      })
+    );
   }
 
   public getConnectionTo(to: Channel) {
-    return this.connections.find((c) => c.to === to);
+    return pipe(
+      this.connections,
+      array.findFirst((c) => c.to === to)
+    );
   }
 }

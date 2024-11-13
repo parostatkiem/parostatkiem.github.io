@@ -53,7 +53,7 @@ export class SceneManager {
     return this._publishers;
   }
 
-  static registerPublisherConnection(
+  static handleMessageReceived(
     publisherName: string,
     channel: Channel,
     publisherParent: Object3D
@@ -66,7 +66,8 @@ export class SceneManager {
       )
     );
 
-    publisher.registerConnection(channel);
+    const connection = publisher.registerConnection(channel);
+    connection?.displayMessage();
   }
 
   static renderAllChannels = async (scene: Scene) => {
@@ -89,9 +90,5 @@ export class SceneManager {
       this.publishers,
       array.map((p) => p.addToScene())
     );
-  };
-
-  static handleMessageReceived = (message: Subscription.Message) => {
-    console.log('got message from', message.publisher, message.channel);
   };
 }

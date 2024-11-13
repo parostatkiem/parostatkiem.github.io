@@ -17,7 +17,7 @@ export class Channel extends VisualObject {
 
     const handleMessageReceived = (message: Subscription.Message) => {
       console.log('got message from', message.publisher, message.channel);
-      SceneManager.registerPublisherConnection(
+      SceneManager.handleMessageReceived(
         message.publisher ?? '<unknown>',
         this,
         scene
