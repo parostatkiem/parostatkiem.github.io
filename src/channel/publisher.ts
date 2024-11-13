@@ -1,20 +1,18 @@
 import * as THREE from 'three';
 import { CSS2DObject } from 'three/examples/jsm/Addons.js';
 import { MAX_X } from '../coordinates';
-import { VisualObject } from './visualObject';
 import { Channel } from './channel';
-import { array } from 'fp-ts';
 import { Connection } from './connection';
+import { VisualObject } from './visualObject';
 
 export class Publisher extends VisualObject {
   private _name: string;
   static readonly RADIUS = MAX_X / 150;
   private connections: Connection[] = [];
 
-  constructor(name: string, scene: THREE.Scene) {
-    super(scene);
+  constructor(name: string, parent: THREE.Object3D) {
+    super(parent);
     this._name = name;
-    console.log('creating publisher', name);
   }
 
   public get name() {
@@ -48,17 +46,17 @@ export class Publisher extends VisualObject {
     this.model = new THREE.Mesh(geometry, material);
     this.model.add(earthLabel);
 
-    console.log('add to scene', this.name);
-    super.addToScene();
+    // console.log('add to scene', this.name);
+    super.addToParent();
   }
 
   public registerConnection(to: Channel) {
     const isExisting = this.connections.find((c) => c.to === to);
 
-    if (!isExisting) {
+    if (!isExisting && this.model) {
       this.connections = [
         ...this.connections,
-        new Connection(this, to, this.scene),
+        new Connection(this, to, this.model),
       ];
     }
   }

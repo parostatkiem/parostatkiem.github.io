@@ -9,8 +9,8 @@ export class Connection extends VisualObject {
   private _from: Publisher;
   private _to: Channel;
 
-  constructor(from: Publisher, to: Channel, scene: THREE.Scene) {
-    super(scene);
+  constructor(from: Publisher, to: Channel, parent: THREE.Object3D) {
+    super(parent);
     this._from = from;
     this._to = to;
     this.assignPosition(new THREE.Vector3(0, 0, 0)); //todo unused
@@ -42,6 +42,21 @@ export class Connection extends VisualObject {
 
     this.model = new THREE.Line(geometry, material);
 
-    super.addToScene();
+    let n = 1;
+    const iterations = 100;
+    const interval = setInterval(() => {
+      if (n + 1 === iterations) {
+        clearInterval(interval);
+        return;
+      }
+
+      if (this.model) {
+        this.model.scale.set(n / iterations, n / iterations, n / iterations);
+      }
+
+      n++;
+    }, 200);
+
+    super.addToParent();
   }
 }

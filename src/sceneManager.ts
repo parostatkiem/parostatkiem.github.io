@@ -1,6 +1,6 @@
 import { apply, array, option } from 'fp-ts';
 import { pipe } from 'fp-ts/lib/function';
-import { Scene } from 'three';
+import { Object3D, Scene } from 'three';
 import { Channel, RADIUS } from './channel/channel';
 import { getAllChannelsRawData, getUsers, setToken } from './pubnub';
 import { VisualObject } from './channel/visualObject';
@@ -36,9 +36,9 @@ export class SceneManager {
     );
   };
 
-  private static addNewPublisher(name: string, scene: Scene) {
+  private static addNewPublisher(name: string, parent: Object3D) {
     //todo fp-ts
-    const p = new Publisher(name, scene);
+    const p = new Publisher(name, parent);
     this._publishers.push(p);
     this.assignPublisherPosition(p);
     p.addToScene();
@@ -56,12 +56,14 @@ export class SceneManager {
   static registerPublisherConnection(
     publisherName: string,
     channel: Channel,
-    scene: Scene
+    publisherParent: Object3D
   ) {
     const publisher = pipe(
       this.publishers,
       array.findFirst((p) => p.name === publisherName),
-      option.getOrElse(() => this.addNewPublisher(publisherName, scene))
+      option.getOrElse(() =>
+        this.addNewPublisher(publisherName, publisherParent)
+      )
     );
 
     publisher.registerConnection(channel);

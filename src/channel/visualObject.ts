@@ -6,12 +6,12 @@ import {
 import { RADIUS } from './channel';
 
 export class VisualObject {
-  public scene: THREE.Scene;
   private _position: THREE.Vector3 | undefined;
   public model: THREE.Object3D | undefined;
+  public parent: THREE.Object3D;
 
-  constructor(scene: THREE.Scene) {
-    this.scene = scene;
+  constructor(parent: THREE.Object3D) {
+    this.parent = parent;
   }
 
   private update() {
@@ -22,7 +22,7 @@ export class VisualObject {
     this.model.position.y = this.position.y;
   }
 
-  public addToScene() {
+  public addToParent() {
     if (!this.position || !this.model) {
       return;
     }
@@ -30,7 +30,7 @@ export class VisualObject {
     this.update();
     this.model.position.z = RADIUS + RADIUS; // todo 3d maybe?
 
-    this.scene.add(this.model);
+    this.parent.add(this.model);
   }
 
   public assignPosition(pos: THREE.Vector3) {

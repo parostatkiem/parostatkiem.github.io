@@ -20,7 +20,7 @@ export class Channel extends VisualObject {
       SceneManager.registerPublisherConnection(
         message.publisher ?? '<unknown>',
         this,
-        this.scene
+        this.parent
       );
     };
     this.name = name;
@@ -60,6 +60,6 @@ export class Channel extends VisualObject {
 
     this.model = new THREE.Mesh(geometry, material);
     this.model.add(earthLabel);
-    super.addToScene();
+    super.addToParent();
   }
 }
