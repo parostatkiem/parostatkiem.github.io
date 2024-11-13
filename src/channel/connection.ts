@@ -1,10 +1,8 @@
 import * as THREE from 'three';
-import { CSS2DObject } from 'three/examples/jsm/Addons.js';
 import { MAX_X } from '../coordinates';
-import { VisualObject } from './visualObject';
 import { Channel } from './channel';
-import { array } from 'fp-ts';
 import { Publisher } from './publisher';
+import { VisualObject } from './visualObject';
 
 export class Connection extends VisualObject {
   static readonly RADIUS = MAX_X / 150;
@@ -15,7 +13,7 @@ export class Connection extends VisualObject {
     super(scene);
     this._from = from;
     this._to = to;
-    this.assignPosition(new THREE.Vector2(0, 0)); //todo unused
+    this.assignPosition(new THREE.Vector3(0, 0, 0)); //todo unused
 
     this.addToScene();
   }
