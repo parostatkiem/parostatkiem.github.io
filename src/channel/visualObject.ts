@@ -3,7 +3,6 @@ import {
   getRandomPositionOnScreen,
   OBJECT_PLACEMENT_MARGIN,
 } from '../coordinates';
-import { RADIUS } from './channel';
 
 export class VisualObject {
   private _position: THREE.Vector3 | undefined;

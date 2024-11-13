@@ -57,8 +57,8 @@ export class Connection extends VisualObject {
 
     model.position.set(to.x, to.y, to.z);
     this.parent.add(model);
-    let n = 1;
 
+    let n = 1;
     const interval = setInterval(() => {
       if (n + 1 === MESSAGE_ANIMATION_STEPS) {
         clearInterval(interval);

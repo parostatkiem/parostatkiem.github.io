@@ -39,7 +39,6 @@ export class Publisher extends VisualObject {
     earthDiv.className = 'label';
     earthDiv.textContent = this._name;
     earthDiv.style.backgroundColor = 'transparent';
-    // document.body.appendChild(earthDiv)
 
     const earthLabel = new CSS2DObject(earthDiv);
     earthLabel.position.set(-Publisher.RADIUS * 2, -Publisher.RADIUS, 0);
@@ -49,7 +48,6 @@ export class Publisher extends VisualObject {
     this.model.add(earthLabel);
     this.model.position.set(this.position.x, this.position.y, this.position.z);
 
-    // console.log('add to scene', this.name);
     super.addToParent();
   }
 

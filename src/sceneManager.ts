@@ -1,22 +1,18 @@
-import { apply, array, option } from 'fp-ts';
+import { array, option } from 'fp-ts';
 import { pipe } from 'fp-ts/lib/function';
 import { Object3D, Scene } from 'three';
 import { Channel, RADIUS } from './channel/channel';
-import { getAllChannelsRawData, getUsers, setToken } from './pubnub';
-import { VisualObject } from './channel/visualObject';
 import { Publisher } from './channel/publisher';
-import { Subscription } from 'pubnub';
-import { getOrElse } from 'fp-ts/lib/EitherT';
+import { VisualObject } from './channel/visualObject';
+import { getAllChannelsRawData } from './pubnub';
 
 export class SceneManager {
   private static _channels: Channel[] = [];
   private static _publishers: Publisher[] = [];
 
   private static getChannelsData = async (scene: Scene) => {
-    // setToken();
-    const a = (await getAllChannelsRawData()).data;
-
-    return a.map((c) => new Channel(c.name ?? '<unknown>', scene));
+    const rawData = (await getAllChannelsRawData()).data;
+    return rawData.map((c) => new Channel(c.name ?? '<unknown>', scene));
   };
 
   private static assignChannelsPositions = (channels: Channel[]) => {
@@ -77,18 +73,6 @@ export class SceneManager {
     pipe(
       this.channels,
       array.map((c) => c.addToScene())
-    );
-  };
-
-  static renderAllPublishers = async (scene: Scene) => {
-    this._publishers = (await getUsers()).data.map(
-      (u) => new Publisher(u.name ?? '', scene)
-    );
-
-    pipe(this.publishers, array.map(this.assignPublisherPosition));
-    pipe(
-      this.publishers,
-      array.map((p) => p.addToScene())
     );
   };
 }

@@ -23,9 +23,9 @@ export class Channel extends VisualObject {
         scene
       );
     };
+
     this.name = name;
     this.subscription = getChannelSubscription(this.name);
-    // this.subscription.onMessage = this.handleMessageReceived;
     this.subscription.addListener({
       message: handleMessageReceived,
       signal: handleMessageReceived,
