@@ -1,15 +1,28 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8">
-		<title>My first three.js app</title>
-		<style>
-			body { margin: 0; }
-		</style>
-				<link type="text/css" rel="stylesheet" href="/src/main.css">
-
-	</head>
-	<body>
-		<script type="module" src="/src/scene.ts"></script>
-	</body>
+  <head>
+    <meta charset="utf-8" />
+    <title>PubNub Traffic Visualizer 2000</title>
+    <style>
+      @import url('https://fonts.cdnfonts.com/css/codystar');
+      body {
+        margin: 0;
+      }
+      h1 {
+        position: absolute;
+        z-index: 2;
+        color: rgba(187, 255, 0, 0.85);
+        font-family: 'Codystar', sans-serif;
+        width: 100%;
+        text-align: center;
+        filter: drop-shadow(3px 3px 3px rgb(187, 255, 0));
+      }
+    </style>
+    <link type="text/css" rel="stylesheet" href="/src/main.css" />
+    <link href="https://fonts.cdnfonts.com/css/codystar" rel="stylesheet" />
+  </head>
+  <body>
+    <h1>PubNub Traffic Visualizer 2000</h1>
+    <script type="module" src="/src/scene.ts"></script>
+  </body>
 </html>
