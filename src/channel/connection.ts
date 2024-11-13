@@ -11,7 +11,7 @@ const createMessageVisual = () => {
   const RADIUS = MAX_X / 200;
   const geometry = new THREE.SphereGeometry(RADIUS, 4, 4);
   const material = new THREE.MeshBasicMaterial({
-    color: 0xaaff00,
+    color: 0xccff00,
     wireframe: true,
     wireframeLinewidth: 0.1,
     opacity: 0.4,
@@ -84,7 +84,7 @@ export class Connection extends VisualObject {
     const material = new THREE.LineBasicMaterial({
       color: 0xccff00,
       transparent: true,
-      opacity: 0.3,
+      opacity: 0.25,
     });
     const points = [
       new THREE.Vector3(0, 0, 0),

@@ -44,7 +44,7 @@ export class Channel extends VisualObject {
       color: 0xff0000,
       wireframe: true,
       wireframeLinewidth: 0.1,
-      opacity: 0.4,
+      opacity: 0.5,
       transparent: true,
     });
 
