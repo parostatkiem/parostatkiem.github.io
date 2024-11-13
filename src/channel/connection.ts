@@ -36,7 +36,7 @@ export class Connection extends VisualObject {
     const material = new THREE.LineBasicMaterial({
       color: 0xccff00,
       transparent: true,
-      opacity: 0.2,
+      opacity: 0.3,
     });
     const points = [
       new THREE.Vector3(0, 0, 0),
@@ -49,6 +49,7 @@ export class Connection extends VisualObject {
 
     let n = 1;
     const iterations = 100;
+
     const interval = setInterval(() => {
       if (n + 1 === iterations) {
         clearInterval(interval);
@@ -56,12 +57,14 @@ export class Connection extends VisualObject {
       }
 
       if (this.model) {
-        // this.model.scale.set(n / iterations, n / iterations, n / iterations);
+        this.model.scale.set(n / iterations, n / iterations, n / iterations);
+      }
+
+      if (n === 1) {
+        super.addToParent();
       }
 
       n++;
-    }, 200);
-
-    super.addToParent();
+    }, 12);
   }
 }
