@@ -30,9 +30,6 @@ const camera = new THREE.OrthographicCamera(
 
 // const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.01, 100000);
 camera.position.set(0, 0, MAX_Z * 2);
-// camera.position.set(0, 0, 0);
-
-// camera.lookAt(SCENE_CENTER);
 
 const renderer = new THREE.WebGLRenderer({ alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -40,31 +37,23 @@ renderer.setAnimationLoop(animate);
 
 document.body.appendChild(renderer.domElement);
 
-// const d1 = new Channel('BL', scene);
-// d1.assignPosition(new THREE.Vector3(0, 0, RADIUS));
-// d1.addToScene();
+// const mesh = new THREE.Mesh(
+//   new THREE.BoxGeometry(10, 10, 10),
+//   new THREE.MeshBasicMaterial({
+//     color: 0xaaff00,
+//   })
+// );
+// mesh.position.set(0, 0, 0);
+// scene.add(mesh);
 
-// const d2 = new Channel('TR', scene);
-// d2.position.set(MAX_X, MAX_Y, RADIUS);
-// d2.addToScene();
-
-const mesh = new THREE.Mesh(
-  new THREE.BoxGeometry(10, 10, 10),
-  new THREE.MeshBasicMaterial({
-    color: 0xaaff00,
-  })
-);
-mesh.position.set(0, 0, 0);
-scene.add(mesh);
-
-const mesh2 = new THREE.Mesh(
-  new THREE.BoxGeometry(10, 10, 10),
-  new THREE.MeshBasicMaterial({
-    color: 0x00aaff,
-  })
-);
-mesh2.position.set(MAX_X, MAX_Y, MAX_Z);
-scene.add(mesh2);
+// const mesh2 = new THREE.Mesh(
+//   new THREE.BoxGeometry(10, 10, 10),
+//   new THREE.MeshBasicMaterial({
+//     color: 0x00aaff,
+//   })
+// );
+// mesh2.position.set(MAX_X, MAX_Y, MAX_Z);
+// scene.add(mesh2);
 
 // const gridHelper = new THREE.GridHelper(MAX_X, 10);
 // gridHelper.position.y = -1;
@@ -72,12 +61,6 @@ scene.add(mesh2);
 
 SceneManager.renderAllChannels(scene);
 // SceneManager.renderAllPublishers(scene);
-
-// function a() {
-//   const s = getSubscriptionToAllChannels();
-//   s.onMessage = SceneManager.handleMessageReceived;
-//   s.subscribe();
-// }
 
 const labelRenderer = new CSS2DRenderer();
 labelRenderer.setSize(window.innerWidth, window.innerHeight);
@@ -87,31 +70,24 @@ document.body.appendChild(labelRenderer.domElement);
 
 const cameraControls = new CameraControls(camera, labelRenderer.domElement);
 
-// cameraControls.moveTo(SCENE_CENTER.x, SCENE_CENTER.y, MAX_Z * 2, false);
 cameraControls.setOrbitPoint(SCENE_CENTER.x, SCENE_CENTER.y, SCENE_CENTER.z);
 cameraControls.truck(MAX_X / 2, -MAX_Y / 2);
 
-// cameraControls.rotate(0, 90);
-// cameraControls.rotatePolarTo(90);
-
-// cameraControls.zoomTo(0.2);
-
-// cameraControls.saveState();
-//controls.update() must be called after any manual changes to the camera's transform
-// camera.position.set(0, 200, 100);
-// camera.lookAt(0, 200, 100);
-// controls.update();
-
-// camera.layers.toggle(0);
-const stats = new Stats();
+// const stats = new Stats();
 // document.body.appendChild(stats.dom);
 
 function animate() {
   const delta = clock.getDelta();
-  cameraControls.update(delta);
+  const a = cameraControls.update(delta);
+  if (a) {
+    cameraControls.setOrbitPoint(
+      SCENE_CENTER.x,
+      SCENE_CENTER.y,
+      SCENE_CENTER.z
+    );
+  }
+
   renderer.render(scene, camera);
   labelRenderer.render(scene, camera);
-  stats.update();
+  // stats.update();
 }
-
-// setTimeout(a, 100);
