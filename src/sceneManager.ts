@@ -1,10 +1,12 @@
-import { array, option } from 'fp-ts';
+import { apply, array, option } from 'fp-ts';
 import { pipe } from 'fp-ts/lib/function';
 import { Scene } from 'three';
 import { Channel, RADIUS } from './channel/channel';
 import { getAllChannelsRawData, getUsers, setToken } from './pubnub';
 import { VisualObject } from './channel/visualObject';
 import { Publisher } from './channel/publisher';
+import { Subscription } from 'pubnub';
+import { getOrElse } from 'fp-ts/lib/EitherT';
 
 export class SceneManager {
   private static _channels: Channel[] = [];
@@ -37,6 +39,7 @@ export class SceneManager {
   private static addNewPublisher(name: string, scene: Scene) {
     //todo fp-ts
     const p = new Publisher(name, scene);
+    this._publishers.push(p);
     this.assignPublisherPosition(p);
     p.addToScene();
     return p;
@@ -55,19 +58,13 @@ export class SceneManager {
     channel: Channel,
     scene: Scene
   ) {
-    const maybePublisher = this.publishers.find(
-      (p) => p.name === publisherName
-    );
-
     const publisher = pipe(
-      maybePublisher,
-      option.fromNullable,
+      this.publishers,
+      array.findFirst((p) => p.name === publisherName),
       option.getOrElse(() => this.addNewPublisher(publisherName, scene))
     );
 
-    if (!maybePublisher?.getConnectionTo(channel)) {
-      publisher.registerConnection(channel);
-    }
+    publisher.registerConnection(channel);
   }
 
   static renderAllChannels = async (scene: Scene) => {
@@ -90,5 +87,9 @@ export class SceneManager {
       this.publishers,
       array.map((p) => p.addToScene())
     );
+  };
+
+  static handleMessageReceived = (message: Subscription.Message) => {
+    console.log('got message from', message.publisher, message.channel);
   };
 }

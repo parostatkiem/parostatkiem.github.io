@@ -33,8 +33,8 @@ export class VisualObject {
     this.scene.add(this.model);
   }
 
-  public assignPosition(pos: THREE.Vector2) {
-    this._position = new THREE.Vector3(pos.x, pos.y, RADIUS);
+  public assignPosition(pos: THREE.Vector3) {
+    this._position = pos;
   }
 
   public get position() {

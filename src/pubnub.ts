@@ -2,8 +2,8 @@ import PubNub from 'pubnub';
 
 const pubnub = new PubNub({
   // publishKey: "myPublishKey",
-  subscribeKey: 'demo',
-  //   subscribeKey: 'sub-c-a82f38b7-b8b1-4226-9bd4-abae3e698854',
+  //   subscribeKey: 'demo',
+  subscribeKey: 'sub-c-d9270297-5a17-4084-9e13-5bf43938f5d4',
   //   secretKey: 'sec-c-ZDEyNjc0YTctNjFkYS00MGY1LWEwMzQtNDc0Y2JjZDZiMjk0',
   userId: 'traffic-visualizer', // Assuming userId is correctly typed as string
 });
@@ -27,6 +27,8 @@ export const getAllChannelsRawData = async () => {
   });
 };
 
+getAllChannelsRawData();
+
 export const getChannelSubscription = (c: string) => {
   //   setToken();
   return pubnub.channel(c).subscription({ receivePresenceEvents: true });
@@ -48,4 +50,11 @@ export const getUsers = () => {
     // limit: number,
     // page: any,
   });
+};
+
+export const getSubscriptionToAllChannels = () => {
+  const channel = pubnub.channel('*.*');
+  const s = channel.subscription();
+
+  return s;
 };
