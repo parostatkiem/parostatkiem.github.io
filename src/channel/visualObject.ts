@@ -14,22 +14,10 @@ export class VisualObject {
     this.parent = parent;
   }
 
-  private update() {
-    if (!this.position || !this.model) {
-      return;
-    }
-    this.model.position.x = this.position.x;
-    this.model.position.y = this.position.y;
-  }
-
   public addToParent() {
     if (!this.position || !this.model) {
       return;
     }
-
-    this.update();
-    this.model.position.z = RADIUS + RADIUS; // todo 3d maybe?
-
     this.parent.add(this.model);
   }
 

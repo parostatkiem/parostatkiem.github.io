@@ -12,7 +12,7 @@ export class Channel extends VisualObject {
   private name: string;
   private subscription: Subscription;
 
-  constructor(name: string, scene: THREE.Scene) {
+  constructor(name: string, scene: THREE.Object3D) {
     super(scene);
 
     const handleMessageReceived = (message: Subscription.Message) => {
@@ -20,7 +20,7 @@ export class Channel extends VisualObject {
       SceneManager.registerPublisherConnection(
         message.publisher ?? '<unknown>',
         this,
-        this.parent
+        scene
       );
     };
     this.name = name;
@@ -59,6 +59,7 @@ export class Channel extends VisualObject {
     earthLabel.center.set(0, 0);
 
     this.model = new THREE.Mesh(geometry, material);
+    this.model.position.set(this.position.x, this.position.y, this.position.z);
     this.model.add(earthLabel);
     super.addToParent();
   }

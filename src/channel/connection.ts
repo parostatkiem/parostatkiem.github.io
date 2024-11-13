@@ -13,6 +13,7 @@ export class Connection extends VisualObject {
     super(parent);
     this._from = from;
     this._to = to;
+    // console.log(parent.position);
     this.assignPosition(new THREE.Vector3(0, 0, 0)); //todo unused
 
     this.addToScene();
@@ -28,6 +29,7 @@ export class Connection extends VisualObject {
 
   public addToScene() {
     if (!this.from.position || !this.to.position) {
+      console.error('adding to scene failed');
       return; //todo
     }
 
@@ -36,7 +38,10 @@ export class Connection extends VisualObject {
       transparent: true,
       opacity: 0.2,
     });
-    const points = [this.from.position, this.to.position];
+    const points = [
+      new THREE.Vector3(0, 0, 0),
+      this.parent.worldToLocal(this.to.position),
+    ];
 
     const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
@@ -51,7 +56,7 @@ export class Connection extends VisualObject {
       }
 
       if (this.model) {
-        this.model.scale.set(n / iterations, n / iterations, n / iterations);
+        // this.model.scale.set(n / iterations, n / iterations, n / iterations);
       }
 
       n++;

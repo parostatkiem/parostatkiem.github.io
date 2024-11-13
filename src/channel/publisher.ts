@@ -45,6 +45,7 @@ export class Publisher extends VisualObject {
 
     this.model = new THREE.Mesh(geometry, material);
     this.model.add(earthLabel);
+    this.model.position.set(this.position.x, this.position.y, this.position.z);
 
     // console.log('add to scene', this.name);
     super.addToParent();
