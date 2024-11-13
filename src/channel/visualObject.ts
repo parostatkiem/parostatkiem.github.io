@@ -23,6 +23,7 @@ export class VisualObject {
 
   public assignPosition(pos: THREE.Vector3) {
     this._position = pos;
+    this.model?.position.set(pos.x, pos.y, pos.z);
   }
 
   public get position() {

@@ -4,7 +4,7 @@ export const MAX_X = 1000;
 export const MAX_Y = (MAX_X * window.innerHeight) / window.innerWidth;
 export const MAX_Z = MAX_X;
 
-export const SCENE_CENTER = new THREE.Vector3(MAX_X / 2, MAX_Y / 2, 0);
+export const SCENE_CENTER = new THREE.Vector3(MAX_X / 2, MAX_Y / 2, MAX_Z / 2);
 
 export const OBJECT_PLACEMENT_MARGIN = MAX_X / 100;
 

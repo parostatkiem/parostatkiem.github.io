@@ -14,7 +14,7 @@ const createMessageVisual = () => {
     color: 0xccff00,
     wireframe: true,
     wireframeLinewidth: 0.1,
-    opacity: 0.4,
+    opacity: 0.6,
     transparent: true,
   });
 
