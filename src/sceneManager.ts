@@ -11,7 +11,7 @@ export class SceneManager {
   private static _publishers: Publisher[] = [];
 
   private static getChannelsData = async (scene: Scene) => {
-    const rawData = (await getAllChannelsRawData()).data;
+    const rawData = await getAllChannelsRawData();
     return rawData.map((c) => new Channel(c.name ?? '<unknown>', scene));
   };
 
