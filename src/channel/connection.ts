@@ -26,12 +26,17 @@ export class Connection extends VisualObject {
   static readonly RADIUS = MAX_X / 150;
   private _from: Publisher;
   private _to: Channel;
+  private targetPosition: THREE.Vector3;
 
   constructor(from: Publisher, to: Channel, parent: THREE.Object3D) {
+    if (!to.position) {
+      throw new Error('Failed to create Connection: target position not set');
+    }
     super(parent);
     this._from = from;
     this._to = to;
-    console.log('creating connection');
+    this.targetPosition = to.position.clone();
+
     this.assignPosition(new THREE.Vector3(0, 0, 0)); //todo unused
 
     this.addToScene();
@@ -46,14 +51,14 @@ export class Connection extends VisualObject {
   }
 
   public displayMessage() {
-    if (!this.to.position) {
+    if (!this.targetPosition) {
       return; //todo
     }
 
     const model = createMessageVisual();
 
     const from = new THREE.Vector3(0, 0, 0);
-    const to = model.worldToLocal(this.to.position);
+    const to = model.worldToLocal(this.targetPosition);
 
     model.position.set(to.x, to.y, to.z);
     this.parent.add(model);
@@ -76,7 +81,7 @@ export class Connection extends VisualObject {
   }
 
   public addToScene() {
-    if (!this.from.position || !this.to.position) {
+    if (!this.from.position || !this.targetPosition) {
       console.error('adding to scene failed');
       return; //todo
     }
@@ -88,7 +93,7 @@ export class Connection extends VisualObject {
     });
     const points = [
       new THREE.Vector3(0, 0, 0),
-      this.parent.worldToLocal(this.to.position),
+      this.parent.worldToLocal(this.targetPosition),
     ];
 
     const geometry = new THREE.BufferGeometry().setFromPoints(points);
