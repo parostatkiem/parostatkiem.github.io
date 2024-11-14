@@ -22,7 +22,7 @@ export const getAllChannelsRawData = async (): Promise<
         },
       })
     ).data,
-    { name: 'users' },
+    { name: 'user' },
     { name: 'app' },
   ];
 };
