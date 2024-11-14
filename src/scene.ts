@@ -65,7 +65,10 @@ const cameraControls = new CameraControls(camera, labelRenderer.domElement);
 
 cameraControls.setOrbitPoint(SCENE_CENTER.x, SCENE_CENTER.y, SCENE_CENTER.z);
 cameraControls.truck(MAX_X / 2, -MAX_Y / 2);
-cameraControls.zoom(0.5, false);
+cameraControls.zoom(
+  -100 / Math.min(window.innerHeight, window.innerWidth),
+  false
+);
 
 // const stats = new Stats();
 // document.body.appendChild(stats.dom);
